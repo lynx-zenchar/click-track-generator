@@ -18,7 +18,7 @@ Perfect for prog rock/metal enthusiasts and anyone needing precise, customizable
 ## Quick Start
 
 ```cmd
-cd c:\Users\matte\Desktop\PersonalPython\click_track\react_ver\click-track-generator
+cd path/to/.../click-track-generator
 npm install
 npm run dev
 ```
