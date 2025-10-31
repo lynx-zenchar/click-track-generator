@@ -440,7 +440,6 @@ export default function ClickTrackWebapp() {
             <List.Item><Text span fw={500}>7/4x3</Text> → 3 bars of 7/4</List.Item>
             <List.Item><Text span fw={500}>(7/4x3,6/8x1)x4</Text> → Repeat a sequence (3 bars 7/4 + 1 bar 6/8) 4 times</List.Item>
             <List.Item><Text span fw={500}>5/4x2,3/4x4</Text> → 2 bars of 5/4, then 4 bars of 3/4</List.Item>
-            <List.Item>Denominators of 8 (e.g. 6/8) automatically double the BPM</List.Item>
           </List>
         </Box>
         
