@@ -1,10 +1,21 @@
-# Click Track Generator (React + WebAudio)
+# Multi-Time Signature Click Track Generator
 
-This app generates multi-time-signature click tracks in the browser using the Web Audio API. It supports accents, 4/8 denominator BPM rules (8 doubles the base BPM), optional uploaded samples for accent/regular clicks, playback, and WAV download.
+A powerful web-based click track generator for musicians working with complex time signatures. Built with React, Mantine UI, and the Web Audio API for entirely client-side audio rendering.
 
-Optionally, a small Node backend converts the client-rendered WAV to MP3 for compact exports.
+Perfect for prog rock/metal enthusiasts and anyone needing precise, customizable metronome tracks with unusual time signatures.
 
-## Run the frontend (Vite)
+## Features
+
+- **Complex Time Signature Sequences**: Support for nested repeats like `(7/4x3,6/8x1)x4,5/4x2`
+- **Tap Tempo**: Click to measure your tempo in real-time with median interval calculation
+- **Audio Playback Controls**: Play/pause and seek through your generated click track
+- **Smart BPM Handling**: Automatically doubles BPM for 8th-note denominators (e.g., 6/8)
+- **Custom Accents**: Specify which beats to accent (e.g., `1,3` for downbeat and beat 3)
+- **High-Quality Audio**: Uses default woodblock samples or synthesized clicks with filtered noise
+- **WAV Export**: Download your click track as a standard WAV file
+- **Dark Mode UI**: Clean, centered interface with Mantine components
+
+## Quick Start
 
 ```cmd
 cd c:\Users\matte\Desktop\PersonalPython\click_track\react_ver\click-track-generator
@@ -12,48 +23,65 @@ npm install
 npm run dev
 ```
 
-The dev server runs at a localhost port Vite prints (e.g., 5173).
-
-## Optional: Run the MP3 backend
-
-```cmd
-cd c:\Users\matte\Desktop\PersonalPython\click_track\react_ver\click-track-generator\server
-npm install
-npm start
-```
-
-The backend listens on http://localhost:5174 and exposes `POST /api/mp3` for converting a WAV payload (audio/wav) to MP3 (audio/mpeg). During development, the frontend proxies `/api/*` calls to this backend (see `vite.config.js`).
+The dev server will start on `http://localhost:5173` (or next available port).
 
 ## Usage
 
-1. Enter a time-signature sequence, e.g. `(7/4x3,6/4x1)x4,5/4x2`.
-2. Set BPM, accents (comma-separated, default `1`).
-3. Default samples are used automatically: `block-1-328874.mp3` (accent) and `block-2-328875.mp3` (regular).
-	- Preferred: place them in the app's `public/` directory as `public/block-1-328874.mp3` and `public/block-2-328875.mp3`.
-	- Alternatively, place them in the repository root (`click_track/`); the backend serves them via `/api/assets/<name>` when running.
-	- If neither is found, the app falls back to synthesized woodblock clicks.
-4. Click Generate to render a WAV, Play to preview, Download to save the WAV.
-5. If backend is running, click MP3 to convert and download MP3.
-6. Tap Tempo: press the Tap button repeatedly in time; the app shows the detected BPM. Click Use to set BPM, or Reset to clear taps.
+1. **Enter Time Signature Sequence**: Use the syntax guide in the app
 
-Notes:
-- The browser export is WAV; MP3 requires the backend encoder.
-- Very long tracks will take longer and need more memory to render.
-- The parser mirrors the original Python approach and supports one level of grouped repeats like `(7/4x3,6/8x1)x4`.
+   - Simple: `7/4x3` → 3 bars of 7/4
+   - Complex: `(7/4x3,6/8x1)x4` → Repeat a sequence 4 times
+   - Mixed: `5/4x2,3/4x4` → 2 bars of 5/4, then 4 bars of 3/4
+2. **Set Your BPM**: Enter manually or use the **Tap Tempo** feature
 
-# React + Vite
+   - Click "Tap" repeatedly in time with your desired tempo
+   - Click "Use" to apply the detected BPM
+   - Click "Reset" to start over
+3. **Configure Accents**: Comma-separated beat numbers (default: `1` for downbeat only)
+4. **Generate**: Click to render your click track (uses Web Audio API)
+5. **Playback**: Use Play/Pause and the seek slider to preview
+6. **Download**: Save as WAV file for use in your DAW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Audio Samples
 
-Currently, two official plugins are available:
+The app uses default woodblock samples located in the `public/` directory:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `block-1-328874.mp3` - Accent clicks
+- `block-2-328875.mp3` - Regular clicks
 
-## React Compiler
+If samples aren't found, the app automatically falls back to synthesized clicks (sine wave + filtered noise).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19.1.1** - Modern UI framework
+- **Mantine 7.12.1** - Beautiful component library
+- **Vite 7.1.7** - Fast build tool and dev server
+- **Web Audio API** - Client-side audio rendering (OfflineAudioContext)
+- **100% Client-Side** - No backend required, fully static deployment
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment
+
+This is a fully static React app that can be deployed to any static hosting service:
+
+### Vercel (Recommended)
+
+1. Push to GitHub
+2. Import repository in Vercel
+3. Auto-detects Vite settings (build: `npm run build`, output: `dist`)
+4. Deploy!
+
+### Manual Build
+
+```cmd
+npm run build
+```
+
+Outputs to `dist/` directory. Deploy the contents to any static host.
+
+## Contributing
+
+This project started as a Python script conversion to a web app. Feel free to fork and enhance!
+
+## License
+
+Open source - use it, modify it, share it with your fellow nerds and progheads!
